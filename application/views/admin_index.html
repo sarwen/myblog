@@ -1,0 +1,365 @@
+<?php include("admin_header.html");?>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+          <h2 class="sub-header">赚呗平台数据</h2>
+
+            <div class="row-fluid">
+
+                <div class="responsive col-sm-6">
+
+                    <div class="dashboard-stat blue">
+                        <div class="visual">
+                            <i class="glyphicon glyphicon-user"></i>
+                        </div>
+                        <div class="details">
+                            <div class="number">
+                                <span id="total_user" class="fixnumber">&nbsp;</span><span class="small">用户</span>
+                            </div>
+                            <div class="desc">
+                                 {number_format($total_register)}
+                            </div>
+                        </div>
+                        <a href="#" class="more">
+                            <!--更多 <i class="m-icon-swapright m-icon-white"></i>-->
+                        </a>
+                    </div>
+                </div>
+
+                <div  class="responsive col-sm-6">
+
+                    <div class="dashboard-stat yellow">
+
+                        <div class="visual">
+
+                            <i class="glyphicon glyphicon-yen"></i>
+
+                        </div>
+
+                        <div class="details">
+
+                            <div class="number">
+                                <span id="total_amount" class="fixnumber">&nbsp;</span><span class="small">总金额</span>
+                            </div>
+
+                            <div class="desc">{number_format($total_recharge)}元</div>
+
+                        </div>
+
+                        <a href="#" class="more">
+
+                            <!--View more <i class="m-icon-swapright m-icon-white"></i>-->
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+        </div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#container_interestcoupon').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: '当前加息卷总量：{$not_used_I+$used_I}已用量：{$used_I}'
+            },
+            tooltip: {
+                pointFormat: '<{literal}>{series.name}: <b>{point.percentage:.1f}<{/literal}> %</b>'
+            },
+            exporting: {
+                enabled: false  //设置导出按钮不可用
+            },
+            credits: {
+                enabled: false //不显示LOGO
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b><{literal}>{point.name}</b>: {point.percentage:.1f}<{/literal}>  %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: [
+                    ['已用',   {$used_I}],
+                    ['未用',   {$not_used_I}],
+
+                ]
+            }]
+        });
+    });
+    $(function () {
+        $('#container_redpaket').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: '当前红包总量：{$not_used_redpaket+$used_redpaket}已用量：{$used_redpaket}'
+            },
+            tooltip: {
+                pointFormat: '<{literal}>{series.name}: <b>{point.percentage:.1f}<{/literal}> %</b>'
+            },
+            exporting: {
+                enabled: false  //设置导出按钮不可用
+            },
+            credits: {
+                enabled: false //不显示LOGO
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b><{literal}>{point.name}</b>: {point.percentage:.1f}<{/literal}>  %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: [
+                    ['已用',   {$used_redpaket}],
+                    ['未用',   {$not_used_redpaket}],
+
+                ]
+            }]
+        });
+    });
+
+    $.post('admin.php?c=index&a=statisticsarp',function( data ){
+        getDataarp(data);
+        getDataarup(data);
+    },"json");
+    function getDataarp( data ){
+        $('#container_arp').highcharts({
+            chart: {
+                zoomType: 'x'
+            },
+            title: {
+                text: 'arp 总付费额度/总用户数'
+            },
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                        '鼠标拖动可以进行缩放' : '手势操作进行缩放'
+            },
+            xAxis: {
+                categories: data[0].xAxis
+            },
+            exporting: {
+                enabled: false  //设置导出按钮不可用
+            },
+            credits: {
+                enabled: false //不显示LOGO
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+            series: [{
+                type: 'area',
+                name: 'arp数值',
+                data: data[0].loanMoney
+            }]
+        });
+    }
+    function getDataarup( data ){
+        $('#container_arup').highcharts({
+            chart: {
+                zoomType: 'x'
+            },
+            title: {
+                text: 'arpu  付费额度/登陆数'
+            },
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                        '鼠标拖动可以进行缩放' : '手势操作进行缩放'
+            },
+            xAxis: {
+                categories: data[1].xAxis
+            },
+            exporting: {
+                enabled: false  //设置导出按钮不可用
+            },
+            credits: {
+                enabled: false //不显示LOGO
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+            series: [{
+                type: 'area',
+                name: 'arpu数值',
+                data: data[1].loanMoney
+            }]
+        });
+    }
+
+
+    $(function () {
+        $('#container_withdraw').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: '近4周提现总额大于2000万个数:{$withdrawCriticalNumbers}'+'<br/>'+
+                '其他:{$withdrawSurplusCounts}',
+            },
+            tooltip: {
+                pointFormat: '<{literal}>{series.name}: <b>{point.percentage:.1f}<{/literal}> %</b>'
+            },
+            credits:{
+                enabled:false // 禁用版权信息
+            },
+            plotOptions: {
+                pie: {
+                    size:250,
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b><{literal}>{point.name}</b>: {point.percentage:.1f}<{/literal}>  %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: [
+                    ['>=2000万',{$withdrawCriticalNumbers}],
+                    ['<2000万',{$withdrawSurplusCounts}],
+                ]
+            }]
+        });
+    });
+    $(function () {
+        $('#container_useramortization').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: '近4周还款总额大于2000万个数:{$useramortizationCriticalNumbers}'+'<br/>'+
+                '其他:{$useramortizationSurplusCounts}',
+            },
+            tooltip: {
+                pointFormat: '<b><{literal}>{point.name}</b>: {point.percentage:.1f}<{/literal}>  %',
+            },
+            credits:{
+                enabled:false // 禁用版权信息
+            },
+            plotOptions: {
+                pie: {
+                    size:250,
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b><{literal}>{point.name}</b>: {point.percentage:.1f}<{/literal}>  %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: [
+                    ['近4周还款总额大于2000万的个数',   {$useramortizationCriticalNumbers}],
+                    ['其他',                              {$useramortizationSurplusCounts}]
+                ]
+            }]
+        });
+    });
+
+</script>
+
+{include file="footer.html"}
