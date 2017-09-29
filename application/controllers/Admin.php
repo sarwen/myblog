@@ -27,6 +27,10 @@ class Admin extends CI_Controller {
 		if(!checklogin()){
 			$this->login();
 		}
+		$this->load->model('NodeModel','nodeModel');
+		$nodelist = $this->nodeModel->getAllNode();
+		$nodelist = node_merges($nodelist);
+		$this->load->vars('nodelist',$nodelist);
 	}
 
 	public function index() {

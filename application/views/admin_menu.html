@@ -23,16 +23,18 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar side-menu">
 
-            {foreach from=$rbacList item=item  key=key}
+            <?php foreach($nodelist as $item):?>
             <ul class="nav nav-sidebar {if $ppid == $item.id} on {/if} ">
-                <li class="active active{$key}">
-                    <a>{$item.remark}</a><i class="ion {if $ppid == $item.id} iactive {/if}"> > </i>
+                <li class="active active">
+                    <a><?=$item['remark']?></a><i class="ion {if $ppid == $item.id} iactive {/if}"> > </i>
                 </li>
-                {foreach from=$item.child item=controls}
-                <li {if $pid == $controls.id} class="act" {/if} ><a href="{$controls.url}" >{$controls.remark}</a></li>
-                {/foreach}
+                <?php if(isset($item['child'])):?>
+                <?php foreach ($item['child'] as $k):?>
+                <li class="<?php if (isset($pid) && $pid == $k['id']):?> 'act'<?php endif; ?>"><a href="<?=$k['url']?>" ><?=$k['remark']?></a></li>
+                <?php endforeach; ?>
+                <?php endif; ?>
             </ul>
-            {/foreach}
+            <?php endforeach; ?>
         </div>
     </div>
 </div>
