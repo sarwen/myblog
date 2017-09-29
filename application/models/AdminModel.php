@@ -20,8 +20,5 @@ class AdminModel extends CI_Model{
         $res = $query->row();
         return $res;
     }
-    //注销
-    public  function loginout() {
 
-    }
 }
