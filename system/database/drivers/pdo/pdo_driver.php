@@ -104,7 +104,7 @@ class CI_DB_pdo_driver extends CI_DB {
 			$this->subdriver = '4d';
 		}
 		elseif ( ! in_array($this->subdriver, array('4d', 'cubrid', 'dblib', 'firebird', 'ibm', 'informix', 'mysql', 'oci', 'odbc', 'pgsql', 'sqlite', 'sqlsrv'), TRUE))
-		{
+		{//var_dump($this->subdriver);exit(__FILE__.__LINE__);
 			log_message('error', 'PDO: Invalid or non-existent subdriver');
 
 			if ($this->db_debug)

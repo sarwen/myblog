@@ -312,4 +312,11 @@ switch (ENVIRONMENT)
  *
  * And away we go...
  */
+define('COMMONPATH', APPPATH . 'common' . DIRECTORY_SEPARATOR);
+
+function __autoload($class) {
+	if (strpos($class, 'CI_') !== 0) {
+		@include_once(COMMONPATH . $class . '.php');
+	}
+}
 require_once BASEPATH.'core/CodeIgniter.php';

@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/CodeIgniter-3.1.6';
+$config['base_url'] = 'http://localhost/myblog';
 
 /*
 |--------------------------------------------------------------------------
@@ -76,7 +76,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'chinese';
+$config['language']	= 'zh_cn';
 
 /*
 |--------------------------------------------------------------------------
