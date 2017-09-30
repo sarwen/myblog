@@ -45,7 +45,18 @@ class Blogs extends CI_Controller {
 		//文章栏
 		$article = $this->blogs->getArticle();
 		$this->load->vars('articlelist',$article);
-		//var_dump($article);exit(__FILE__.__LINE__);
+
+		//点击排行
+		$sortArticle = $this->blogs->getSort();
+		$this->load->vars('sortArticle',$sortArticle);
+
+		//最新文章
+		$newArticle = $this->blogs->getNew();
+		$this->load->vars('newArticle',$newArticle);
+
+		//站长推荐
+		$recommendArticle = $this->blogs->getRecommend();
+		$this->load->vars('recommendArticle',$recommendArticle);
 
 		$this->load->view('blog_index/index');
 	}

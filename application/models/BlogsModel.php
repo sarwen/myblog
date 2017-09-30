@@ -26,4 +26,36 @@ class BlogsModel extends CI_Model{
         $res = $query->result_array();
         return $res;
     }
+    //点击排行
+    public function getSort($offset = 0, $limit = 0){
+        if($limit){
+            $query = $this->db->query("SELECT * FROM article order by click DESC limit $offset,$limit");
+        }else{
+            $query = $this->db->query("SELECT * FROM article order by click DESC");
+        }
+        $res = $query->result_array();
+        return $res;
+    }
+    //最新文章
+    public function getNew($offset = 0, $limit = 0){
+        if($limit){
+            $query = $this->db->query("SELECT * FROM article order by ctime desc limit $offset,$limit");
+        }else{
+            $query = $this->db->query("SELECT * FROM article order by click DESC");
+        }
+        $res = $query->result_array();
+        return $res;
+    }
+    //站长推荐
+    public function getRecommend($offset = 0, $limit = 0){
+        if($limit){
+            $query = $this->db->query("SELECT * FROM article order by click DESC limit $offset,$limit");
+        }else{
+            $query = $this->db->query("SELECT * FROM article order by click DESC");
+        }
+        $res = $query->result_array();
+        return $res;
+    }
+
+
 }
