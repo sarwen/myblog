@@ -22,18 +22,13 @@ class Blogs extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->library('session');
+		//$this->load->library('session');
 		$this->load->helper(array('base','url'));
 	/*	if(!checklogin()){
 			$this->login();
 		}*/
-	}
-
-	public function index() {
-		//$userInfo = $_SESSION['userInfo'];
-		//$this->load->vars('userInfo',(array)$userInfo);
-		//标签栏
 		$this->load->model('BlogsModel','blogs');
+		//标签栏
 		$tagsInfo = $this->blogs->getAllTags();///var_dump($tagsInfo);exit(__FILE__.__LINE__);
 		if($tagsInfo){
 			foreach($tagsInfo as &$k){
@@ -41,11 +36,6 @@ class Blogs extends CI_Controller {
 			}
 		}
 		$this->load->vars('taglist',$tagsInfo);
-
-		//文章栏
-		$article = $this->blogs->getArticle();
-		$this->load->vars('articlelist',$article);
-
 		//点击排行
 		$sortArticle = $this->blogs->getSort();
 		$this->load->vars('sortArticle',$sortArticle);
@@ -57,8 +47,21 @@ class Blogs extends CI_Controller {
 		//站长推荐
 		$recommendArticle = $this->blogs->getRecommend();
 		$this->load->vars('recommendArticle',$recommendArticle);
+	}
+
+	public function index() {
+		//文章栏
+		$article = $this->blogs->getArticle();
+		$this->load->vars('articlelist',$article);
 
 		$this->load->view('blog_index/index');
+	}
+	public function content(){
+		$id = $this->input->get('id');
+		//根据id获取文章内容
+		$article = $this->blogs->getArticleContent($id);
+		$this->load->vars('article',$article);
+		$this->load->view('blog_index/content');
 	}
 }
 

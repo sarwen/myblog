@@ -56,6 +56,12 @@ class BlogsModel extends CI_Model{
         $res = $query->result_array();
         return $res;
     }
+    //文章内容
+    public function getArticleContent($id){
+        $query = $this->db->query("SELECT * FROM article WHERE id=$id");
+        $res = $query->row_array();
+        return $res;
+    }
 
 
 }
