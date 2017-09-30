@@ -91,6 +91,27 @@
 	   </span>	 
 	    文章推荐
 	   </h2>
+		   <?php foreach($articlelist as $item):?>
+		   <div class="blogs">
+			   <figure>
+				   <img src="<?php echo base_url();?>index/images/01.jpg">
+			   </figure>
+			   <ul>
+				   <h3><a href="/"><?=$item['title']?></a></h3>
+				   <p><?=$item['content']?></p>
+				   <p class="autor">
+				    <span class="lm f_l">
+					    <a href="/">个人博客</a>
+					 </span>
+					   <span class="dtime f_l"><?php echo date('Y-m-d',$item['ctime']);?></span>
+					 <span class="viewnum f_r">
+					    浏览（<a href="/"><?=$item['click']?></a>）</span>
+					 <span class="pingl f_r">
+					    评论（<a href="/">60</a>）</span>
+				   </p>
+			   </ul>
+		   </div>
+		   <?php endforeach;?>
 	     <div class="blogs">
 		      <figure>
 			     <img src="<?php echo base_url();?>index/images/01.jpg">

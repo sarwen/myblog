@@ -42,6 +42,11 @@ class Blogs extends CI_Controller {
 		}
 		$this->load->vars('taglist',$tagsInfo);
 
+		//文章栏
+		$article = $this->blogs->getArticle();
+		$this->load->vars('articlelist',$article);
+		//var_dump($article);exit(__FILE__.__LINE__);
+
 		$this->load->view('blog_index/index');
 	}
 }
