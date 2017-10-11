@@ -28,3 +28,8 @@ function node_merges($node, $access = array(), $pid = 0, $id = 'id')
     }
     return $arr;
 }
+function ajaxReturn($data)
+{
+    echo json_encode($data);
+    exit;
+}

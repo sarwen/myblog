@@ -1,9 +1,9 @@
-{include file="header.html"}
+<?php include("admin_header.html");?>
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
      <div class="top-title">
-            <h2 class="sub-header">修改角色</h2>
+            <h2 class="sub-header">编辑文章</h2>
             <div class="top-tools">
-              <a class="btn btn-default" href="?c=role">返回</a>
+              <a class="btn btn-default" onclick="window.history.back()" >返回</a>
             </div>
           </div>
     <div id="myTabContent" class="tab-content" style="margin-top:10px">
@@ -14,7 +14,7 @@
             <form class="form-horizontal"   method="post" >
 
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">角色名称：<code>*</code></label>
+                    <label class="col-sm-2 control-label">标题名称：<code>*</code></label>
                     <div class="col-sm-7">
                         <input type="text" name="name" value="{$roleInfo.name}" class="form-control" placeholder="角色名称">
                     </div>
@@ -89,15 +89,15 @@
 
     $(".add_companys").click(function(){
           var name=$('input[name=name]').val();
-           var remark=$('#remark').val();
            var status=$('#status').val();
+        var remark=$('#remark').val();
            var id=$('input[name=id]').val();
            if($.trim(name)==''){
                throwExc('角色名称必须填写');
                return false;
            }
 
-        $.post("?c=role&a=edit",{
+        $.post("",{
             'id':id,
             'status':status,
               'remark':remark,
@@ -119,4 +119,4 @@
 
 
 </script>
-{include file="footer.html"}
+<?php include("admin_footer.html");?>

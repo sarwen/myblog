@@ -25,8 +25,10 @@ class Blog extends CI_Controller {
 		$this->load->library('session');
 		$this->load->helper(array('base','url'));
 		if(!checklogin()){
-			$this->login();
+			redirect('Admin/login');
 		}
+		$userInfo = $_SESSION['userInfo'];
+		$this->load->vars('userInfo',(array)$userInfo);
 		$this->load->model('NodeModel','nodeModel');
 		$nodelist = $this->nodeModel->getAllNode();
 		$nodelist = node_merges($nodelist);
@@ -34,9 +36,37 @@ class Blog extends CI_Controller {
 	}
 
 	public function lists() {
-		$userInfo = $_SESSION['userInfo'];
-		$this->load->vars('userInfo',(array)$userInfo);
+//		$userInfo = $_SESSION['userInfo'];
+//		$this->load->vars('userInfo',(array)$userInfo);
+		$this->load->model('BlogsModel','blogs');
+		$article = $this->blogs->getArticle();
+		$this->load->vars('articlelist',$article);
 		$this->load->view('blog/index');
+	}
+	public function edit(){
+		$id = $this->input->get('id');
+		$this->load->model('BlogsModel','blogs');
+		//根据id获取文章内容
+		$article = $this->blogs->getArticleContent($id);
+		$this->load->vars('article',$article);
+		$this->load->view('blog/edit');
+	}
+	public function add(){
+		//var_dump($_POST);exit;
+		if($_POST){
+			//获取添加内容
+			$name = $this->input->post('name');
+			$content = $this->input->post('content');
+			$status = $this->input->post('status');
+			$remark = $this->input->post('remark');
+			$this->load->model('BlogsModel','blogs');
+			$data = ['name'=>$name,'status'=>$status,'remark'=>$remark,'content'=>$content];
+			$this->blogs->add($data);
+			ajaxReturn(['error' => 200, 'msg' => '添加文章成功']);
+			/*var_dump(json_encode($res));
+			return json_encode($res);*/
+		}
+		$this->load->view('blog/add');
 	}
 }
 

@@ -98,7 +98,7 @@
 			   </figure>
 			   <ul>
 				   <h3><a href="content?id=<?=$item['id']?>"><?=$item['title']?></a></h3>
-				   <p><?=$item['content']?></p>
+				   <p><?=substr($item['content'],0,300)?>...</p>
 				   <p class="autor">
 				    <span class="lm f_l">
 					    <a href="/">个人博客</a>

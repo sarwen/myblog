@@ -62,6 +62,9 @@ class BlogsModel extends CI_Model{
         $res = $query->row_array();
         return $res;
     }
+    public function add($data){
+        
+    }
 
 
 }
