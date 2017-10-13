@@ -16,7 +16,7 @@ class AdminModel extends CI_Model{
             return false;
         }
         $this->load->database();
-        $query = $this->db->query("SELECT `name`,`password` FROM admin_user where `name`='".$name."'");
+        $query = $this->db->query("SELECT `name`,`password`,`id` FROM admin_user where `name`='".$name."'");
         $res = $query->row();
         return $res;
     }

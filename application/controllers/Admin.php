@@ -46,7 +46,7 @@ class Admin extends CI_Controller {
 
 			$name = $this->input->post('username',true);
 			$this->load->model('AdminModel','userModel');
-			$userInfo = $this->userModel->getUserInfoByName($name);
+			$userInfo = $this->userModel->getUserInfoByName($name);//var_dump($userInfo);exit(__FILE__.__LINE__);
 			if(empty($userInfo)){
 				echo '用户或者密码错误';
 				$this->load->view('admin_login');

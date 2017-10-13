@@ -63,8 +63,7 @@ class BlogsModel extends CI_Model{
         return $res;
     }
     public function add($data){
-        
+        $res = $this->db->insert('article', $data);
+        return $res;
     }
-
-
 }
