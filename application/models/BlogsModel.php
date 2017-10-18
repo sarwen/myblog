@@ -12,14 +12,24 @@ class BlogsModel extends CI_Model{
     }
     //获取所有标签
     public function getAllTags() {
-        $query = $this->db->query("SELECT `id`,`tagname` FROM tags");
+        $query = $this->db->query("SELECT * FROM tags");
         $res = $query->result_array();
         return $res;
     }
     //获取文章列表
     public function getArticle($offset = 0, $limit = 0){
         if($limit){
-            $query = $this->db->query("SELECT * FROM article limit $offset,$limit");
+            $query = $this->db->query("SELECT * FROM article where status=1 limit $offset,$limit");
+        }else{
+            $query = $this->db->query("SELECT * FROM article where status=1");
+        }
+        $res = $query->result_array();
+        return $res;
+    }
+    //获取文章列表
+    public function getAdminArticle($offset = 0, $limit = 0){
+        if($limit){
+            $query = $this->db->query("SELECT * FROM article where  limit $offset,$limit");
         }else{
             $query = $this->db->query("SELECT * FROM article");
         }
@@ -63,7 +73,21 @@ class BlogsModel extends CI_Model{
         return $res;
     }
     public function add($data){
+       //var_dump($data);exit(__FILE__.__LINE__);
+        //var_dump($this->db);
         $res = $this->db->insert('article', $data);
+
+        //var_dump($res);exit(__FILE__.__LINE__);
+        return $res;
+    }
+    public function upd($id, $data){
+        //var_dump($data);exit(__FILE__.__LINE__);
+        //var_dump($this->db);
+        $where = "id=$id";
+        $this->db->where('id', $id);
+        $res = $this->db->update('article', $data);
+       /* $res = $this->db->update_string('article', $data, $where);*/
+        //var_dump($res);exit(__FILE__.__LINE__);
         return $res;
     }
 }

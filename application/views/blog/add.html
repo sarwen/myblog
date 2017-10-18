@@ -25,23 +25,42 @@
                   </div>
                 </div>
                   <div class="form-group">
-                  <label  class="col-sm-2 control-label">角色描述：</label>
+                  <label  class="col-sm-2 control-label">标签：</label>
                   <div class="col-sm-7">
                       <textarea class="form-control col-sm-6" rows="5" id="remark" name="remark"></textarea>
                   </div>
                 </div>
                   <div class="form-group">
+                      <label  class="col-sm-2 control-label">分类：</label>
+                      <div class="col-sm-7">
+                          <textarea class="form-control col-sm-6" rows="5" id="category" name="category"></textarea>
+                      </div>
+                  </div>
+                  <div class="form-group">
                       <label  for="inputSelect" class="col-sm-2 control-label">状态：</label>
                       <div class="col-sm-7">
                           <div class="input-group">
                               <select class="form-control" name="status" id="status">
-                                  {foreach from=$status key=k item=val}
-                                  <option value="{$k}" >{$val}</option>
-                                  {/foreach}
+                                  <option value="1" >显示</option>
+                                  <option value="0" >隐藏</option>
                               </select>
-                      <span class="input-group-btn">
+                      <!--<span class="input-group-btn">
                         <button class="btn btn-default addbank" type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                      </span>
+                      </span>-->
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label  for="inputSelect" class="col-sm-2 control-label">是否推荐：</label>
+                      <div class="col-sm-7">
+                          <div class="input-group">
+                              <select class="form-control" name="recommend" id="recommend">
+                                  <option value="1" >是</option>
+                                  <option value="0" >否</option>
+                              </select>
+                              <!--<span class="input-group-btn">
+                                <button class="btn btn-default addbank" type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                              </span>-->
                           </div>
                       </div>
                   </div>
@@ -114,14 +133,26 @@ $(".add_companys").click(function(){
    var name=$('input[name=name]').val();
    var remark=$('#remark').val();
    var status=$('#status').val();
+   var recommend=$('#recommend').val();
+   var category=$('#category').val();
     var text = getContent();
-    console.log(text);
+    console.log(recommend);
    if($.trim(name)==''){
-       throwExc('角色名称必须填写');
+       throwExc('标题名称必须填写');
        return false;
    }
+    if($.trim(remark)==''){
+        throwExc('标签必须填写');
+        return false;
+    }
+    if($.trim(category)==''){
+        throwExc('分类必须填写');
+        return false;
+    }
     $.post("",{
               'status':status,
+              'recommend':recommend,
+              'category':category,
               'remark':remark,
               'name':name,
             'content':text

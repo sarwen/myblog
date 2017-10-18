@@ -39,16 +39,35 @@ class Blog extends CI_Controller {
 //		$userInfo = $_SESSION['userInfo'];
 //		$this->load->vars('userInfo',(array)$userInfo);
 		$this->load->model('BlogsModel','blogs');
-		$article = $this->blogs->getArticle();
+		$article = $this->blogs->getAdminArticle();
 		$this->load->vars('articlelist',$article);
 		$this->load->view('blog/index');
 	}
 	public function edit(){
 
 		$id = $this->input->get('id');
+		if($_POST){
+			$name = $this->input->post('name');
+			$content = $this->input->post('content');
+			$status = $this->input->post('status');
+			$recommend = $this->input->post('recommend');
+			$remark = $this->input->post('remark');
+			$cat = $this->input->post('category');
+			$userInfo = $_SESSION['userInfo'];
+			$userid = $userInfo->id;//var_dump($userid);
+			$this->load->model('BlogsModel','blogs');
+			$data = ['title'=>$name,'status'=>$status,'content'=>$content,'ctime'=>time(),'utime'=>time(),'category'=>$cat,'author_id'=>$userid,'is_recommend'=>$recommend];
+			$res = $this->blogs->upd($id,$data);
+			if($res){
+				ajaxReturn(['error' => 200, 'msg' => '修改文章成功']);
+			}else{
+				ajaxReturn(['error' => 100, 'msg' => '修改文章失败']);
+			}
+		}
 		$this->load->model('BlogsModel','blogs');
 		//根据id获取文章内容
 		$article = $this->blogs->getArticleContent($id);
+		//var_dump($article);exit(__FILE__.__LINE__);
 		$this->load->vars('article',$article);
 		$this->load->view('blog/edit');
 	}
@@ -59,12 +78,13 @@ class Blog extends CI_Controller {
 			$name = $this->input->post('name');
 			$content = $this->input->post('content');
 			$status = $this->input->post('status');
+			$recommend = $this->input->post('recommend');
 			$remark = $this->input->post('remark');
 			$cat = $this->input->post('category');
 			$userInfo = $_SESSION['userInfo'];
 			$userid = $userInfo->id;//var_dump($userid);
 			$this->load->model('BlogsModel','blogs');
-			$data = ['title'=>$name,'status'=>$status,'remark'=>$remark,'content'=>$content,'ctime'=>time(),'ctime'=>time(),'category'=>$cat,'author_id'=>$userid];
+			$data = ['title'=>$name,'status'=>$status,'content'=>$content,'ctime'=>time(),'utime'=>time(),'category'=>$cat,'author_id'=>$userid,'is_recommend'=>$recommend];
 			$res = $this->blogs->add($data);
 			if($res){
 				ajaxReturn(['error' => 200, 'msg' => '添加文章成功']);
@@ -74,6 +94,12 @@ class Blog extends CI_Controller {
 
 		}
 		$this->load->view('blog/add');
+	}
+	public function taglist(){
+		$this->load->model('BlogsModel','blogs');
+		$tags = $this->blogs->getAllTags();
+		$this->load->vars('taglist',$tags);
+		$this->load->view('blog/taglist');
 	}
 }
 
