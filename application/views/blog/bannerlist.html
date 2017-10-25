@@ -1,0 +1,99 @@
+<?php include("admin_header.html");?>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+          <h2 class="sub-header">banner列表&nbsp;&nbsp;<small>bannerlist</small></h2>
+
+           <a href="addbanner" class="btn btn-success add ">添加</a>
+
+          <div id="myTabContent" class="tab-content" style="margin-top:10px">
+
+             <!-- start 已上线 -->
+          <div class="table-responsive tab-pane fade in active" id="no2">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                    <th colspan="1" rowspan="1">编号</th>
+                    <th >banner名称</th>
+                    <th >图片</th>
+                    <th >分类</th>
+                    <th >描述</th>
+                    <th >client</th>
+	                <th >操作</th>
+                </tr>
+                </tr>
+              </thead>
+              <tbody>
+				<?php foreach($banners as $banner):?>
+				<tr >
+
+					<td><?=$banner['id']?></td>
+					<td class="bannername"><?=$banner['name']?></td>
+					<td><img width="200" src="<?=$banner['url']?>"> </td>
+                    <td>
+                        <?php if ($banner['type'] == 1):?>
+                        banner
+                        <?php else:?>
+                        广告图
+                        <?php endif;?>
+                    </td>
+                    <td><?=$banner['desc']?></td>
+                    <td><?=$banner['client']?></td>
+                    <td>
+                        <a id ="delete" class="btn btn-primary btn-xs szpqs">删除</a>
+                        <a href="editbanner?id=<?=$banner['id']?>" class="btn btn-primary btn-xs szpqs">编辑</a>
+                    </td>
+				      </tr>
+				  <?php endforeach;?>
+              </tbody>
+            </table>
+             <!--<div>{$pagination_link}</div>-->
+          </div>
+             <!-- end 已上线 -->
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+  	$(function(){
+  		$("#delete").click(function(){
+  			var id=$(this).parent().parent().find('td:first').html();
+            var msg=$(this).parent().parent().find('.bannername').html();
+          layer.confirm('你确定要删除'+msg+"吗？", {
+                btn: ['确定','取消'] //按钮
+              }, function(){
+              $.ajax({
+                  url: "delbanner",
+                  type: "POST",
+                  data :{ 'id':id,} ,
+                  dataType: "json",
+                  success:function(response){
+                      if(response.error==100) {
+                          throwExc(response.msg);
+                          return false;
+                      }else if(response.error==200){
+                          showSucc(response.msg);
+                          setTimeout("load()",1000);
+                      }
+                  },
+                  error:function(response){
+                      throwExc(response.responseText);
+                      return false;
+                  }
+              },'json')
+              }, function(){
+                layer.msg('取消操作', {
+                  time: 800, //20s后自动关闭
+                });
+              });
+  		
+  		});
+
+
+
+  	})
+    function load(){
+      window.location.href="bannerlist";
+    }
+  </script>

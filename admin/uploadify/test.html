@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link rel="stylesheet" type="text/css" href="newup.css" />
+    <script type="text/javascript" src="//apps.bdimg.com/libs/jquery/1.11.3/jquery.min.js">
+    </script>
+    <script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+    <script type="text/javascript" src="newup.js">
+    </script>
+</head>
+<body>
+<div class="main">
+    <form>
+        <div id="queue">
+        </div>
+        <input id="file_upload" name="file_upload" type="file" multiple="true">
+    </form>
+    <div id="uploadfiles">
+    </div>
+    <div id="fileQueue" style="clear:both">
+    </div>
+    <script type="text/javascript">
+        var timestamp = new Date().getTime();
+        var token =md5('unique_salt'+timestamp);
+        $(function() {
+                    $('#file_upload').uploadify({
+                                'buttonText': '选择文件..',
+                                'fileObjName': 'simplefile',
+                                'method': 'post',
+                                'multi': true,
+                                'queueID': 'fileQueue',
+                                //'uploadLimit': 2,
+                                'fileSizeLimit':'512KB',
+                                'fileTypeExts': '*.gif;*.png;*.jpg;*.bmp;*.jpeg;',//本实例服务端限制只有图片才能上传，所有这里修改别的文件格式也不会真正上传
+                                'buttonImage': 'select.png',
+                                'formData'     : {
+                                    'timestamp' : timestamp,
+                                    'token'     : token
+                                }
+                                ,
+                                'swf': 'uploadify.swf',
+                                'uploader' : 'uploadify.php',
+                                'onUploadStart': function () {
+                            $imgHtml = '<img class="upload_load" src="upload.gif" align="absmiddle" />';
+                            $('#uploadfiles').append($imgHtml);
+                        }
+                        ,
+                                'onUploadSuccess': function(file, data, response) {
+                                    $('.upload_load').remove();
+                                    var json = $.parseJSON(data);
+                                    console.log(json);
+                                    if (json.state == 'success') {
+                                        $imgHtml ='<span id="file_'+json.file_id+'">';
+                                        $imgHtml += '<a href="'+ json.file + '" target="_blank">';
+                                        $imgHtml += '<img src="'+json.file+'" width="100" height="100"  align="absmiddle"/>';
+                                        $imgHtml += '</a>';
+                                        $imgHtml += '<a href="javascript:uploadifyRemove(&quot;' + json.file + '&quot;)">删除</a>';
+                                        $imgHtml +='</span>';
+                                        $($imgHtml).appendTo('#uploadfiles');
+                                    }
+                                    else {
+                                        alert(json.message);
+                                    }
+                                }
+                                ,
+                                'onQueueComplete':function () {
+                                    $('.upload_load').remove();
+                                }
+                            }
+                    );
+                }
+        );
+        //删除文件
+        function uploadifyRemove(filePath){
+            if(confirm('确定要删除吗？')){
+                $.post("uploadify.php?action=del",{
+                            filePath:filePath}
+                        ,function(res){
+                            $('a[href="'+res+'"]').parent().remove();
+                        }
+                );
+            }
+        }
+    </script>
+</div>
+</body>
+</html>

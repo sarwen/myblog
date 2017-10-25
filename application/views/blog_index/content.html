@@ -1,35 +1,10 @@
-﻿<!DOCTYPE HTML>
-<html>
-<head>
- <meta charset="gb2312">
- <title>青檀云境</title>
- <meta name="关键字" content="">
- <link href="<?php echo base_url();?>index/css/buju.css" rel="stylesheet">
- <link href="<?php echo base_url();?>index/css/index.css" rel="stylesheet">
- <script type="text/javascript" src="<?php echo base_url();?>index/js/jquery.min.js"></script>
- <script type="text/javascript" src="<?php echo base_url();?>index/js/sliders.js"></script>
-</head>
-<body>
-  <header>
-    <div class="logo f_l">
-	   <a href="#">
-	      <img src="<?php echo base_url();?>index/images/logo.png">
-	   </a>
-	 </div>
-	 <div id="topnav" class="f_r">
-	     <ul>
-		     <a href="#" target="_blank" id="topnav_current">首页</a>
-			  <a href="#" target="_blank">关于我</a>
-			  <a href="#" target="_blank">文章</a>
-			  <a href="#" target="_blank">心情</a>
-			  <a href="#" target="_blank">相册</a>
-			  <a href="#" target="_blank">留言</a>
-		  </ul>
-	 </div>
-  </header>
+﻿<?php include("header.html");?>
   <article>
     <div class="l_box f_l">
 	   <div class="topnews">
+		   <h2 class="c_titile">
+			   <?=$article['title']?>
+		   </h2>
 		  <div class="blogs">
 			  <p class="autor">
 				    <span class="lm f_l">
@@ -38,16 +13,25 @@
 				  <span class="dtime f_l">2016-02-16</span>
 					 <span class="viewnum f_r">
 					    浏览（<a href="/"><?=$article['click']?></a>）</span>
-					 <span class="pingl f_r">
-					    评论（<a href="/">60</a>）</span>
+					 <span class="pingl f_r">评论（<span id="sourceId::<?=$article['id']?>" class = "cy_cmt_count" style="padding-left:0;margin:0"></span>）</span>
+				  <script id="cy_cmt_num" src="http://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyths4ICA">
+				  </script>
 			  </p>
-			  <h3><a href="/"><?=$article['title']?></a></h3>
-		      <figure>
+		     <!-- <figure>
 			     <img src="<?=$article['show_pic']?>">
-			   </figure>
+			   </figure>-->
 			  <div>
 				  <?=$article['content']?>
 			  </div>
+			  <!--高速版-->
+			  <div id="SOHUCS" sid="<?=$article['id']?>" oid=""></div>
+			  <script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>
+			  <script type="text/javascript">
+				  window.changyan.api.config({
+					  appid: 'cyths4ICA',
+					  conf: 'prod_f40231adb6c7f97e396c3479a2c6f1c9'
+				  });
+			  </script>
 			   <!--<ul>
 
 				  <p><?=$article['content']?></p>
@@ -58,13 +42,12 @@
 	 </div>  
     <div class="r_box f_r">
 	   <div class="tit01">
-         <h3>关注我</h3>
+         <h3>分享</h3>
 		  <div class="gzwm">
 		    <ul>
-			   <li><a class="xlwb" href="#" target="_blank">新浪微博</a></li>
-			   <li><a class="txwb" href="#" target="_blank">腾讯微博</a></li>
-			   <li><a class="rss" href="#" target="_blank">RSS</a></li>
-			   <li><a class="wx" href="#" target="_blank">邮箱</a></li>
+				<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a></div>
+				<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","tsina","bdysc","weixin","renren","tqq","kaixin001","tqf","tieba","douban","sqq","ibaidu","diandian","huaban","duitang","youdao","qingbiji","people","mail","isohu","yaolan","ty","iguba","fbook","twi","copy"],"bdPic":"","bdStyle":"1","bdSize":"32"},"share":{},"image":{"viewList":["qzone","weixin","tsina","tqq","renren"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","weixin","tsina","tqq","renren"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+			   <!--<li><a class="xlwb" href="#" target="_blank">新浪微博</a></li>-->
 			</ul>
 		  </div>
        </div> 
@@ -100,36 +83,27 @@
 			  </ul>
 		  </div>
 		  <div class="tab-main" id="tb-main">
-		      <div class="bd bd-news" style="display:block;"><ul>
+		      <div class="bd bd-news" style="display:block;">
+				  <ul>
 				  <?php foreach($sortArticle as $item):?>
-			      <li><a href="/" target="_blank"><?=$item['title']?></a></li>
+			      <li><a href="<?php echo site_url();?>/Blogs/content?id=<?=$item['id']?>" target="_blank"><?=$item['title']?></a></li>
 				  <?php endforeach;?>
-				   <li><a href="/" target="_blank">教你怎样用欠费手机拨打电话</a></li>
-				   <li><a href="/" target="_blank">原来以为，一个人的勇敢是，删掉他的手机号码...</a></li>
-				   <li><a href="/" target="_blank">手机的16个惊人小秘密，据说99.999%的人都不知</a></li>
-				   <li><a href="/" target="_blank">你面对的是生活而不是手机</a></li>
-				   <li><a href="/" target="_blank">豪雅手机正式发布! 在法国全手工打造的奢侈品</a></li>
-			  </ul></div>
-			   <div class="bd bd-news" ><ul>
+				  </ul>
+			  </div>
+			   <div class="bd bd-news" >
+				   <ul>
 				   <?php foreach($newArticle as $item):?>
-				   <li><a href="/" target="_blank"><?=$item['title']?></a></li>
+				   <li><a href="<?php echo site_url();?>/Blogs/content?id=<?=$item['id']?>" target="_blank"><?=$item['title']?></a></li>
 				   <?php endforeach;?>
-				   <li><a href="/" target="_blank">手机的16个惊人小秘密，据说99.999%的人都不知</a></li>
-				   <li><a href="/" target="_blank">住在手机里的朋友</a></li>
-				   <li><a href="/" target="_blank">教你怎样用欠费手机拨打电话</a></li>
-				   <li><a href="/" target="_blank">你面对的是生活而不是手机</a></li>
-				   <li><a href="/" target="_blank">豪雅手机正式发布! 在法国全手工打造的奢侈品</a></li>
-			  </ul></div>
-			   <div class="bd bd-news" ><ul>
+			  		</ul>
+			   </div>
+			   <div class="bd bd-news" >
+				   <ul>
 				   <?php foreach($recommendArticle as $item):?>
-				   <li><a href="/" target="_blank"><?=$item['title']?></a></li>
+				   <li><a href="<?php echo site_url();?>/Blogs/content?id=<?=$item['id']?>" target="_blank"><?=$item['title']?></a></li>
 				   <?php endforeach;?>
-				   <li><a href="/" target="_blank">你面对的是生活而不是手机</a></li>
-				   <li><a href="/" target="_blank">住在手机里的朋友</a></li>
-				   <li><a href="/" target="_blank">豪雅手机正式发布! 在法国全手工打造的奢侈品</a></li>
-				   <li><a href="/" target="_blank">你面对的是生活而不是手机</a></li>
-				   <li><a href="/" target="_blank">原来以为，一个人的勇敢是，删掉他的手机号码...</a></li>
-			  </ul></div>
+			  		</ul>
+			   </div>
 		  </div>
 	   </div>
 	   <div class="cloud">
@@ -138,24 +112,9 @@
 			  <?php foreach($taglist as $k):?>
 			  <li><a href="<?=$k['url']?>"><?=$k['tagname']?></a></li>
 			  <?php endforeach;?>
-			 <li><a href="/">web开发</a></li>
-			 <li><a href="/">前端设计</a></li>
-			 <li><a href="/">Html</a></li>
-			 <li><a href="/">CSS3</a></li>
-			 <li><a href="/">CSS3+HTML5</a></li>
-			 <li><a href="/">百度</a></li>
-			 <li><a href="/">JavaScript</a></li>
-			 <li><a href="/">C/C++</a></li>
-			 <li><a href="/">ASP.NET</a></li>
-			 <li><a href="/">IOS开发</a></li>
-			 <li><a href="/">Android开发</a></li>
-			 <li><a href="/">PHP</a></li>
-			 <li><a href="/">VS</a></li>
-			  <li><a href="/">PHP</a></li>
-			  <li><a href="/">VS</a></li>
 		  </ul>
 	   </div>
-	   <div class="tuwen">
+	  <!-- <div class="tuwen">
 	     <h3>图文推荐</h3>
 		 <ul>
 		   <li><a href="/"><img src="<?php echo base_url();?>index/images/01.jpg"><b>住在手机里的朋友</b></a>
@@ -185,7 +144,7 @@
 				   <span class="tutime">2016-02-16</span>
 			   </p></li>
 		 </ul>
-	   </div>
+	   </div>-->
 	   <div class="ad"><img src="<?php echo base_url();?>index/images/03.jpg"></div>
 	   <div class="links">
 	     <h3><span><a href="/">申请友情链接</a></span>友情链接</h3>

@@ -1,0 +1,191 @@
+﻿<?php include("header.html");?>
+  <article>
+    <div class="l_box f_l">
+	  <div class="banner">
+	    <div id="slide-holder">
+		   <div id="slide-runner">
+		     <?php foreach($banners as $banner):?>
+			   <a href="/" target="_blank">
+				   <img id="slide-img-<?=$banner['id']?>" src="<?php echo $banner['url'];?>" alt style>
+			   </a>
+			   <?php endforeach;?>
+			  <div id="slide-controls" style="display:block;">
+			    <p id="slide-client" class="text">
+				    <strong></strong>
+					 <span></span>
+				 </p>
+              <p id="slide-desc" class="text"></p> 	
+              <p id="slide-nav"></p>		     			  
+			  </div>
+		   </div> 
+		 </div>
+	  </div>
+	  <script>
+	     if(!window.slider){
+		     var slider={};
+		 }
+		 slider.data=[
+		 <?php foreach($banners as $banner):?>
+		 { "id":"slide-img-<?=$banner['id']?>", //与slide-runner中的img标签id对应
+				 "client":"<?=$banner['client']?>",
+				 "desc":"<?=$banner['desc']?>"},
+		 <?php endforeach;?>
+		 ];
+	   </script>
+	   <div class="topnews">
+	   <h2>
+	  <!-- <span>
+	    <a href="/" target="_blank">武魂大罗</a>
+		 <a href="/" target="_blank">装逼大神</a>
+		 <a href="/" target="_blank">?毛推荐</a>
+	   </span>	 -->
+	    当前标签：<?=$tagname['tagname']?>
+	   </h2>
+		   <?php foreach($articlelist as $item):?>
+		   <div class="blogs">
+			   <figure>
+				   <img src="<?=$item['show_pic']?>">
+			   </figure>
+			   <ul>
+				   <h3><a href="<?php echo site_url();?>/Blogs/content?id=<?=$item['id']?>"><?=$item['title']?></a></h3>
+				   <p><?=mb_substr(strip_tags($item['content']),0,120)?>...</p>
+				   <p class="autor">
+				    <span class="lm f_l">
+					    <a href="/">个人博客</a>
+					 </span>
+					   <span class="dtime f_l"><?php echo date('Y-m-d',$item['ctime']);?></span>
+					 <span class="viewnum f_r">
+					    浏览（<a href="/"><?=$item['click']?></a>）</span>
+					 <span class="pingl f_r">
+					    评论（<a href="/"><?=$item['comments']?></a>）</span>
+				   </p>
+			   </ul>
+		   </div>
+		   <?php endforeach;?>
+	   </div>
+	 </div>  
+    <div class="r_box f_r">
+	   <div class="tit01">
+         <h3>分享</h3>
+		  <div class="gzwm">
+		    <ul>
+			   <!--<li><a class="xlwb" href="#" target="_blank">新浪微博</a></li>
+			   <li><a class="txwb" href="#" target="_blank">腾讯微博</a></li>
+			   <li><a class="rss" href="#" target="_blank">RSS</a></li>
+			   <li><a class="wx" href="#" target="_blank">邮箱</a></li>-->
+				<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a></div>
+				<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2",
+					"bdMiniList":["mshare","qzone","tsina","bdysc","weixin","renren","tqq","kaixin001","tqf","tieba","douban","sqq","ibaidu","diandian","huaban","duitang","youdao","qingbiji","people","mail","isohu","yaolan","ty","iguba","fbook","twi","copy"],
+					"bdPic":"","bdStyle":"1","bdSize":"32"},"share":{},"image":{"viewList":["qzone","weixin","tsina","tqq","renren"],
+					"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,
+					"bdSelectMiniList":["qzone","weixin","tsina","tqq","renren"]}};
+				with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+				</script>
+			</ul>
+		  </div>
+       </div> 
+	   <div class="ad300x100">
+	       <img src="<?php echo $add1[0]['url'];?>">
+	   </div>
+	   <div class="tab" id="lp_right_select">
+	     <script>
+		     window.onload=function()
+			 {
+			     var oLi=document.getElementById("tb").getElementsByTagName("li");
+				 var oUl=document.getElementById("tb-main").getElementsByTagName("div");
+				 for(var i=0;i<oLi.length;i++)
+				 {
+				     oLi[i].index=i;
+					 oLi[i].onmouseover=function()
+					 {
+					    for(var n=0;n<oLi.length;n++)
+						    oLi[n].className="";
+							this.className="cur";
+						for(var n=0;n<oUl.length;n++)
+                            oUl[n].style.display="none";
+                            oUl[this.index].style.display="block";							
+					 }
+				 }
+			 }
+		  </script>
+	     <div class="tab-top">
+		      <ul class="hd" id="tb">
+			       <li class="cur"><a href="/">点击排行</a></li>
+				   <li><a href="/">最新文章</a></li>
+				   <li><a href="/">站长推荐</a></li>
+			  </ul>
+		  </div>
+		  <div class="tab-main" id="tb-main">
+		      <div class="bd bd-news" style="display:block;"><ul>
+				  <?php foreach($sortArticle as $item):?>
+			      <li><a href="<?php echo site_url();?>/Blogs/content?id=<?=$item['id']?>" target="_blank"><?=$item['title']?></a></li>
+				  <?php endforeach;?>
+			  </ul></div>
+			   <div class="bd bd-news" ><ul>
+				   <?php foreach($newArticle as $item):?>
+				   <li><a href="<?php echo site_url();?>/Blogs/content?id=<?=$item['id']?>" target="_blank"><?=$item['title']?></a></li>
+				   <?php endforeach;?>
+			  </ul></div>
+			   <div class="bd bd-news" ><ul>
+				   <?php foreach($recommendArticle as $item):?>
+				   <li><a href="<?php echo site_url();?>/Blogs/content?id=<?=$item['id']?>" target="_blank"><?=$item['title']?></a></li>
+				   <?php endforeach;?>
+			  </ul></div>
+		  </div>
+	   </div>
+	   <div class="cloud">
+	     <h3>标签云</h3>
+		  <ul>
+			  <?php foreach($taglist as $k):?>
+			  <li><a href="<?=$k['url']?>"><?=$k['tagname']?></a></li>
+			  <?php endforeach;?>
+		  </ul>
+	   </div>
+	 <!--  <div class="tuwen">
+	     <h3>图文推荐</h3>
+		 <ul>
+		   <li><a href="/"><img src="<?php echo base_url();?>index/images/01.jpg"><b>住在手机里的朋友</b></a>
+		      <p>
+			      <span class="tulanum"><a href="/">手机配件</a></span>
+				   <span class="tutime">2016-02-16</span>
+			   </p>
+		   </li>
+		   <li><a href="/"><img src="<?php echo base_url();?>index/images/02.jpg"><b>教你怎样用欠费手机拨打电话</b></a>
+		      <p>
+			      <span class="tulanum"><a href="/">手机配件</a></span>
+				   <span class="tutime">2016-02-16</span>
+			   </p></li>
+		   <li><a href="/"><img src="<?php echo base_url();?>index/images/03.jpg"><b>手机的16个惊人小秘密，据说99.999%的人都不知</b></a>
+		      <p>
+			      <span class="tulanum"><a href="/">手机配件</a></span>
+				   <span class="tutime">2016-02-16</span>
+			   </p></li>
+		   <li><a href="/"><img src="<?php echo base_url();?>index/images/06.jpg"><b>原来以为，一个人的勇敢是，删掉他的手机号码...</b></a>
+		      <p>
+			      <span class="tulanum"><a href="/">手机配件</a></span>
+				   <span class="tutime">2016-02-16</span>
+			   </p></li>
+		   <li><a href="/"><img src="<?php echo base_url();?>index/images/04.jpg"><b>豪雅手机正式发布! 在法国全手工打造的奢侈品</b></a>
+		      <p>
+			      <span class="tulanum"><a href="/">手机配件</a></span>
+				   <span class="tutime">2016-02-16</span>
+			   </p></li>
+		 </ul>
+	   </div>-->
+	   <div class="ad"><img src="<?php echo $add2[0]['url'];?>"></div>
+	   <div class="links">
+	     <h3><span><a href="/">申请友情链接</a></span>友情链接</h3>
+		 <ul>
+		   <li><a href="/">醉牛逼的武魂生涯</a></li>
+		    <li><a href="/">观察者网</a></li>
+			 <li><a href="/">中国投资</a></li>
+			  <li><a href="/">强国论坛</a></li>
+			   <li><a href="/">车讯网</a></li>
+			    <li><a href="/">360导航</a></li>
+				 <li><a href="/">一带一路门户网</a></li>
+		 </ul>
+	   </div>
+	 </div>
+  </article>
+</body>
+</html>

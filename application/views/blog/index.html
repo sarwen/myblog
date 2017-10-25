@@ -27,10 +27,9 @@
               <tbody>
 				<?php foreach($articlelist as $article):?>
 				<tr >
-
 					<td><?=$article['id']?></td>
 					<td><?=$article['title']?></td>
-					<td><?=$article['category']?></td>
+					<td><?=$taglist[$article['category']]['tagname']?></td>
            			<td><?=date('Y-m-d H:i:s',$article['ctime'])?></td>
            			<td><?=$article['show_pic']?></td>
            			<td>

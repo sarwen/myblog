@@ -3,7 +3,7 @@
 
           <h2 class="sub-header">标签列表&nbsp;&nbsp;<small>role</small></h2>
 
-           <a href="add" class="btn btn-success add ">添加</a>
+           <a href="addtag" class="btn btn-success add ">添加</a>
 
           <div id="myTabContent" class="tab-content" style="margin-top:10px">
 
@@ -37,8 +37,8 @@
                         <span class="adminstatus adminonline" style="width: 100%">显示</span>
                         <?php endif;?>
                     </td>
-                    <td><?=$tag['ctime']?></td>
-                    <td><?=$tag['utime']?></td>
+                    <td><?=date('Y-m-d H:i:s',$tag['ctime'])?></td>
+                    <td><?=date('Y-m-d H:i:s',$tag['utime'])?></td>
                   <td>
                     <a href="edittag?id=<?=$tag['id']?>" class="btn btn-primary btn-xs szpqs">编辑</a>
                   </td>
