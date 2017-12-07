@@ -56,6 +56,13 @@ class Blogs extends CI_Controller {
 		//右下侧广告图
 		$add2 = $this->blogs->getBannerList(3);
 		$this->load->vars('add2',$add2);
+		//友情链接
+		$this->load->model('LinkModel','link');
+		$where = array('status'=>1);
+		$links = $this->link->getIndexLink();
+		$this->load->vars('links',$links);
+		$func = $this->router->fetch_method();
+		$this->load->vars('func',$func);
 	}
 
 	/*首页*/

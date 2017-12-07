@@ -25,23 +25,32 @@ class Admin extends CI_Controller {
 		$this->load->library('session');
 		$this->load->helper(array('base','url'));
 		if(!checklogin()){
-			$this->login();
+			//var_dump($this->router->fetch_method());
+			if($this->router->fetch_method() != 'login'){
+				$this->login();
+			}
 		}
 		$this->load->model('NodeModel','nodeModel');
 		$nodelist = $this->nodeModel->getAllNode();
 		$nodelist = node_merges($nodelist);
 		$this->load->vars('nodelist',$nodelist);
 	}
-
 	public function index() {
+		redirect('admin/home');
+	}
+	public function home() {
+		if(!checkLogin()){
+			redirect('admin/login');
+		}
 		$userInfo = $_SESSION['userInfo'];
 		$this->load->vars('userInfo',(array)$userInfo);
+		$this->load->vars('ppid',0);
 		$this->load->view('admin_index');
 	}
 	public function login(){
 		if($_POST){
 			if(checkLogin()){
-				redirect('admin/index');
+				redirect('admin/home');
 			}
 
 			$name = $this->input->post('username',true);

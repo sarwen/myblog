@@ -24,9 +24,9 @@
         <div class="col-sm-3 col-md-2 sidebar side-menu">
 
             <?php foreach($nodelist as $item):?>
-            <ul class="nav nav-sidebar {if $ppid == $item.id} on {/if} ">
+            <ul class="nav nav-sidebar <?php if($ppid == $item['id']):?> on <?php endif;?> ">
                 <li class="active active">
-                    <a><?=$item['remark']?></a><i class="ion {if $ppid == $item.id} iactive {/if}"> > </i>
+                    <a><?=$item['remark']?></a><i class="ion <?php if($ppid == $item['id']):?> iactive <?php endif;?>"> > </i>
                 </li>
                 <?php if(isset($item['child'])):?>
                 <?php foreach ($item['child'] as $k):?>

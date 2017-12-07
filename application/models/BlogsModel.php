@@ -101,7 +101,7 @@ class BlogsModel extends CI_Model
         return $res;
     }
 
-    //获取文章内容
+    //获取标签名
     public function getTagname($id)
     {
         $query = $this->db->query("SELECT * FROM tags WHERE id=$id");
@@ -188,7 +188,7 @@ class BlogsModel extends CI_Model
         $res = $this->db->update('banner', $data);
         return $res;
     }
-    //更新banner
+    //删除banner
     public function delBanner($id)
     {
         $this->db->where('id', $id);

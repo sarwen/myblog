@@ -26,7 +26,11 @@ if (!empty($_FILES) && $_POST['token'] == $verifyToken) {
 	$tempFile = $_FILES['simplefile']['tmp_name'];
 
 	$resPath = $_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']) . $targetFolder;
-	$targetPath =$_SERVER['DOCUMENT_ROOT'].'/myblog/admin/uploadify' . $targetFolder;
+	if(strtoupper(substr(PHP_OS,0,3))==='WIN'){
+		$targetPath =$_SERVER['DOCUMENT_ROOT'].'/myblog/admin/uploadify' . $targetFolder;
+	}else{
+		$targetPath =$_SERVER['DOCUMENT_ROOT'].'/admin/uploadify' . $targetFolder;
+	}
 	$targetFile = rtrim($targetPath,'/') . '/' . $_FILES['simplefile']['name'];
 	// Validate the file type
 	$fileTypes = array('jpg','jpeg','gif','png'); // File extensions

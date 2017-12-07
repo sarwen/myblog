@@ -39,7 +39,7 @@
                     <td><?=$banner['desc']?></td>
                     <td><?=$banner['client']?></td>
                     <td>
-                        <a id ="delete" class="btn btn-primary btn-xs szpqs">删除</a>
+                        <a id ="delete" class="btn btn-primary btn-xs szpqs deleteid">删除</a>
                         <a href="editbanner?id=<?=$banner['id']?>" class="btn btn-primary btn-xs szpqs">编辑</a>
                     </td>
 				      </tr>
@@ -57,7 +57,7 @@
   </body>
   <script type="text/javascript">
   	$(function(){
-  		$("#delete").click(function(){
+  		$(".deleteid").click(function(){
   			var id=$(this).parent().parent().find('td:first').html();
             var msg=$(this).parent().parent().find('.bannername').html();
           layer.confirm('你确定要删除'+msg+"吗？", {

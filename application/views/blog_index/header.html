@@ -18,8 +18,8 @@
     </div>
     <div id="topnav" class="f_r">
         <ul>
-            <a href="<?php echo base_url();?>index.php/Blogs/index" target="_self" id="topnav_current">首页</a>
-            <a href="<?php echo base_url();?>index.php/Blogs/about" target="_self">关于我</a>
+            <a href="<?php echo base_url();?>index.php/Blogs/index" target="_self" <?php if($func=='index'):?>id="topnav_current"<?php endif;?>>首页</a>
+            <a href="<?php echo base_url();?>index.php/Blogs/about" target="_self" <?php if($func=='about'):?>id="topnav_current"<?php endif;?>>关于我</a>
             <a href="#" target="_self">文章</a>
             <a href="#" target="_self">心情</a>
             <a href="#" target="_self">相册</a>

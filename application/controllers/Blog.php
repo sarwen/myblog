@@ -178,7 +178,7 @@ class Blog extends CI_Controller {
 			$client = $this->input->post('client');
 			$sort = $this->input->post('sort');
 			$type = $this->input->post('type');
-			$data = ['name'=>$name,'url'=>$url,'ctime'=>time(),'desc'=>$desc,'client'=>$client,'type'=>$sort,'type'=>$type];
+			$data = ['name'=>$name,'url'=>$url,'ctime'=>time(),'desc'=>$desc,'client'=>$client,'sort'=>$sort,'type'=>$type];
 			$this->load->model('BlogsModel','blogs');
 			$res = $this->blogs->addbaner($data);
 			if($res){
