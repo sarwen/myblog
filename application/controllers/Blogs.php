@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Blogs extends CI_Controller {
 
 	/**
-	 * Index Page for this controller.
+	 * 前台控制器
 	 *
 	 * Maps to the following URL
 	 * 		http://example.com/index.php/welcome
